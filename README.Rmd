@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of tutor is to serve learnr tutorial
+The goal of tutor is support UNHCR staff self-learning
 
 ## Installation
 
@@ -30,18 +30,23 @@ The goal of tutor is to serve learnr tutorial
 remotes::install_github("unhcRverse/tutor")
 ```
 
-## Available tutorial
+## Available tutorials
+
+The list below includes tutorials from ThinkR - 
+
+UNHCR specific tutorial are prefaced `unhcr_`
+
+
 
 ```{r eval=FALSE, include=FALSE}
-ls(package:tutor) %>% paste0("tutor::",.) %>% paste0("() \n") %>% cat
+#library(tidyverse)
+#ls(package:tutor) %>% paste0("tutor::",.) |> paste0("() \n") %>% cat
 ```
 
 
 ```{r eval=FALSE}
-
+## Run this to see all tutorials available
 tutor::launch_learn() 
-
-
 
  ## Data Manipulation
  tutor::tibbles_en() 
@@ -81,5 +86,26 @@ tutor::launch_learn()
  ## Programming
  tutor::programming_basics_en() 
  tutor::programming_basics_fr()
+```
+
+## For Facilitator: Create your own tutorial
+
+Please fork this repository, build your tutorials and submit them back through Pull Request
+
+This packages leverage the function from [Rstudio learnr package](https://rstudio.github.io/learnr), such as the capacity for your tutorial to include [Interactive Questions](https://rstudio.github.io/learnr/reference/index.html#interactive-questions), through quiz and other features...
+
+
+``` 
+# new tutorial can be created with 
+library(tutor)
+source("R/create_learn_project.R")
+create_learn_project(
+   name = "UNHCR_Tutorial_test2",
+   path = "inst/tutorials",
+   lang = "en" )
+## you will then get a new Rmd files to edit in order to set up your tutorial
+## once done, rebuild your package to test the tutorial
+# you can then launch your tutorial with 
+tutor::UNHCR_Tutorial_test2()
 ```
 

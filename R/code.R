@@ -27,6 +27,11 @@ is_shiny_prerendered <- function(
   res >= 1
 }
 
+#' tous_les_programmes
+#'
+#' @param lang language
+#'
+#' @export
 tous_les_programmes <- function(lang = "fr") {
   tous_les_rmd <- list.files(
     system.file("tutorials/", package = "tutor"),

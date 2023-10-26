@@ -1,3 +1,18 @@
+# usethis::use_rmarkdown_template(
+#   template_name = "template_tutorial",
+#   template_dir = NULL,
+#   template_description = "Tutor Template Tutoria",
+#   template_create_dir = TRUE
+# )
+
+
+#' create_learn_project
+#'
+#' @param name name
+#' @param path path
+#' @param lang language
+#'
+#' @export
 create_learn_project <- function(
   name,
   path = ".",
@@ -68,9 +83,34 @@ create_learn_project <- function(
         paste0(name, ".Rproj")
       )
   )
+
+  ## Now let's add a template in there...
+  tempTutor <-  file.path(path, name, paste0(name, ".Rmd") )
+
+  ## Copy the report notebook template in the tempfolder..
+  file.copy(system.file("rmarkdown/templates/template_tutorial/skeleton/skeleton.Rmd",
+                        package = "tutor"),
+            tempTutor, overwrite = TRUE)
+
+  ## and finally register the tutorial
+  regtuto  <- file.path("R", paste0(name, ".R") )
+  if (file.exists(regtuto)) file.remove(regtuto)
+  cat( paste0("#' launch ", name), file = regtuto , sep = "\n", append = TRUE)
+  cat( paste0("#' @param ... other params" ), file = regtuto , sep = "\n", append = TRUE)
+  cat( paste0("#' @export" ), file = regtuto , sep = "\n", append = TRUE)
+  cat( paste0(name, " <- function(...){tutor::launch_learn(file = ",name ,", ...) }"), file = regtuto , sep = "\n", append = TRUE)
+
+
+
 }
 
-
+#' create_learn_project_all
+#'
+#' @param name name
+#' @param path path
+#' @param lang language
+#'
+#' @export
 create_learn_project_all <- function(
   names = tutor:::nice_name(
     tutor:::tous_les_programmes(lang = lang),
